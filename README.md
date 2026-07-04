@@ -1,8 +1,13 @@
 # fallacy-cutter
 
+[![CI](https://github.com/Kirill-Kruglov/fallacy-cutter/actions/workflows/ci.yml/badge.svg)](https://github.com/Kirill-Kruglov/fallacy-cutter/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 *A knife for experiments that should fail closed before they fool their author.*
+
+**[📖 Read the essay](https://kirill-kruglov.github.io/fallacy-cutter/)** ·
+**[▶ Worked example](examples/hello_gate/)** ·
+**[How it was made](https://kirill-kruglov.github.io/fallacy-cutter/about.html)**
 
 `fallacy-cutter` is a small extraction from the Ascesis research forge: the
 `gate_harness` instrument plus the evidence-tagged methodology it began to
@@ -48,8 +53,10 @@ lock, or missing provenance resolves to `FAIL`. Nothing passes by default.
   output schema, failure conditions, and a usability-test report. The usability
   test is important because it exposed gaps instead of pretending the playbook was
   complete.
-- [`examples/`](examples/) — one real preregistration example from Ascesis. It is
-  domain-specific; the value is the structure, not the topic.
+- [`examples/`](examples/) — a runnable end-to-end example,
+  [`hello_gate/`](examples/hello_gate/), that goes through the whole harness and
+  comes out as a provenance-signed `VALID` decision (its control fails where it
+  should); plus one real preregistration from Ascesis as a format reference.
 - [`MANIFEST.md`](MANIFEST.md) — exact extraction map from Ascesis.
 
 ## The eight harness modules
@@ -90,26 +97,21 @@ progress.
 
 ## Reproduction
 
-The harness tests are pytest-style and require `pytest` and `numpy`:
+Python 3.11+; the only runtime dependency is numpy.
 
 ```bash
-PYTHONPATH=. python3 -m pytest gate_harness/tests -q
+pip install -e ".[dev]"                              # numpy + pytest
+
+pytest -q                                            # harness adversarial self-tests
+python examples/hello_gate/run.py                    # reproduce the worked example
+python scripts/verify_all.py                         # every example decision is VALID
+python -m gate_harness.verify_decision path/to/decision.json   # verify any decision
 ```
 
-The adversarial tests reproduce real audit findings: they are RED without the
-corresponding defense and GREEN with it.
-
-Basic import sanity:
-
-```bash
-PYTHONPATH=. python3 -c "import gate_harness.runner, gate_harness.verify_decision, gate_harness.leakage_scanner; print('imports OK')"
-```
-
-A citable decision is checked with the independent verifier:
-
-```bash
-PYTHONPATH=. python3 -m gate_harness.verify_decision path/to/decision.json
-```
+The adversarial tests each reproduce a real audit finding: RED without the
+corresponding defense, GREEN with it. CI runs exactly this on every push — including
+regenerating `hello_gate`'s decision from scratch and asserting it is byte-identical,
+which is only possible because the preregistration is a strict ancestor of `HEAD`.
 
 ## Provenance
 
