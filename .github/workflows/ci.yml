@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history: the runner's strict-ancestor prereg check needs it
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pytest numpy
+      - name: Harness self-tests (adversarial; RED without the defense, GREEN with it)
+        run: pytest -q
+      - name: Reproduce the worked example from scratch (deterministic)
+        run: |
+          PYTHONPATH=. python examples/hello_gate/run.py
+          git diff --exit-code examples/hello_gate/decision.json
+      - name: Verify every example decision is provenance-signed VALID
+        run: python scripts/verify_all.py
