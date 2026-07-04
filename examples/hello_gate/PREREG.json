@@ -1,0 +1,16 @@
+{
+  "gate": "hello_gate",
+  "metadata": {
+    "controls": [
+      "shuffled-anchor control must exceed recovery_rmse_max"
+    ],
+    "metric": "RMSE(recovered, latent) on held-out samples",
+    "note": "Toy demonstration of the harness; not a scientific finding.",
+    "question": "Does anchor calibration recover a latent scalar where a shuffled-anchor control cannot?"
+  },
+  "threshold_change_rationale": {},
+  "thresholds": {
+    "information_ratio_min": 0.5,
+    "recovery_rmse_max": 0.5
+  }
+}
