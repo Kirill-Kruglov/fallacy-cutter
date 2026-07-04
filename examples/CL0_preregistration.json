@@ -1,0 +1,41 @@
+{
+  "gate": "CL0",
+  "candidate_family": "layer-audited safe-transition ledger over a generated lawful domain",
+  "question": "Does the proposed safe-transition ledger boundary faithfully exclude collapse-bound states while preserving enough non-collapse states to support equal-budget learner training?",
+  "metrics": {
+    "primary": "false_safe_rate = P(full collapse within horizon | boundary says SAFE)",
+    "non_vacuity": "false_positive_rate = P(boundary says DOOMED | full trajectory remains SAFE)",
+    "purity": "already_collapsed_labeled_safe_rate",
+    "budget": "equal-volume shielded and unfiltered control training sets can be sampled under the declared budget"
+  },
+  "thresholds": {
+    "false_safe_rate_max": 0.05,
+    "already_collapsed_labeled_safe_rate_max": 0.0,
+    "false_positive_rate_max": 0.2,
+    "equal_volume_required": true
+  },
+  "threshold_rationale": {
+    "false_safe_rate_max": "Inherited from 18.1 preregistration: dangerous error above 0.05 means training behind the boundary manufactures false confidence.",
+    "already_collapsed_labeled_safe_rate_max": "Already-collapsed states labeled SAFE are direct abstraction-fidelity failures and require no lookahead or policy interpretation.",
+    "false_positive_rate_max": "Set before measurement to exclude JB0-style conservative-but-vacuous boundaries (FPR 0.540810) while remaining looser than non-vacuous FA2.5 baselines (FPR 0.129771 to 0.167939).",
+    "equal_volume_required": "Safety must not be purchased by having less training data."
+  },
+  "ground_truth_oracle": "Full domain transition semantics and full collapse/unsafe predicate along the actual trajectory; collapse labels and future outcomes are audit-only and are not learner observations.",
+  "positive_controls": [
+    "Known unsafe/collapse-bound states must be classified DOOMED.",
+    "For a Justitia-derived pilot, states satisfying failed-zone/spread and total-mass collapse clauses must be included."
+  ],
+  "negative_controls": [
+    "Ordinary SAFE states sampled from trajectories that remain non-collapse within the horizon.",
+    "Reporting-only metrics must not be accepted as boundary evidence unless a layer audit makes them transition/policy relevant."
+  ],
+  "trivially_safe_baseline": "Classify all states DOOMED / admit no training transitions.",
+  "equal_volume_or_equal_budget_condition": "Shielded ledger and unfiltered control ledger must use the same number of training transitions or the same fixed collection budget.",
+  "decision_vocabulary": {
+    "boundary_fidelity_ok": "false_safe_rate <= 0.05 AND already_collapsed_labeled_safe_rate == 0 AND false_positive_rate <= 0.20 AND equal-volume shielded/control sampling is possible",
+    "boundary_fails_false_safe": "false_safe_rate > 0.05 OR already_collapsed_labeled_safe_rate > 0",
+    "boundary_conservative_but_vacuous": "false_safe_rate <= 0.05 but false_positive_rate > 0.20 OR equal-volume shielded/control sampling is impossible",
+    "boundary_inconclusive_missing_ground_truth": "full transition ground truth, collapse predicate, or pre-registered horizon is unavailable"
+  },
+  "downstream_halt_rule": "If the decision is not boundary_fidelity_ok, do not run learner training, LLM scaling, or derivability claims downstream; perform false-safe witness analysis or reject the candidate."
+}
