@@ -1,0 +1,12 @@
+[project]
+name = "fallacy-cutter"
+version = "0.1.0"
+description = "A fail-closed instrument and methodology for trustworthy experiments by humans and AI agents"
+requires-python = ">=3.11"
+dependencies = ["numpy"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.pytest.ini_options]
+testpaths = ["gate_harness/tests"]
