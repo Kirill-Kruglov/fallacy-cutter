@@ -1,0 +1,26 @@
+{
+  "_harness_provenance": {
+    "evaluation_oracle_ran": true,
+    "harness_version": "53b59235a56aba8feeacf71df8d4691e9e3814309a0c37c35c1e22ee50cbcb9f",
+    "leakage_scan_verified": true,
+    "prereg_lock_verified": true,
+    "tautology_check_ran": true,
+    "written_by": "gate_harness.runner.run_gate"
+  },
+  "classification_success_depends_on_harness_hint": false,
+  "construction_may_be_tautological": false,
+  "decision": "PASS",
+  "downstream_consequence": "PASS licenses only the toy claim below; a fired control would halt it.",
+  "fact": "With 12 anchors the linear calibration recovers the latent scalar to the reported RMSE; the shuffled-anchor control does not.",
+  "inference": "The recovery is carried by the calibration signal, not by the raw reading alone.",
+  "information_ratio": 4.024601268655772,
+  "metric": "RMSE(recovered, latent) on held-out samples (lower is better)",
+  "preregistered_thresholds": {
+    "information_ratio_min": 0.5,
+    "recovery_rmse_max": 0.5
+  },
+  "question": "Does anchor calibration recover a latent scalar from a scaled-and-shifted noisy reading, where a shuffled-anchor control cannot?",
+  "recovery_rmse": 0.050260222020428076,
+  "shuffled_anchor_control_rmse": 1.3781668082179435,
+  "what_was_not_shown": "This is a toy demonstration of the harness, not a real-world disentanglement result."
+}
