@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Instruments, Not Intentions</title>
+<meta name="description" content="How to run an honest experiment when you cannot trust the experimenter — including yourself. A fail-closed instrument that makes your own errors non-citable, for humans and AI agents alike.">
+<meta property="og:title" content="Instruments, Not Intentions">
+<meta property="og:description" content="How to run an honest experiment when you cannot trust the experimenter — including yourself. A fail-closed instrument that makes your own errors non-citable, for humans and AI agents alike.">
+<meta property="og:type" content="article">
+<style>
+:root{--bg:#fbfaf6;--ink:#1d1c1a;--muted:#6b6760;--line:#e4e0d6;--accent:#7a5b2e;--rule:#ece8de;--tablehead:#f3f0e8;--quote-bg:#f1ead9}
+:root[data-theme=dark]{--bg:#15171c;--ink:#dfdcd4;--muted:#9a958c;--line:#2a2d34;--accent:#cdb079;--rule:#23262d;--tablehead:#1c1f25;--quote-bg:#1e222a}
+@media (prefers-color-scheme:dark){:root:not([data-theme]){--bg:#15171c;--ink:#dfdcd4;--muted:#9a958c;--line:#2a2d34;--accent:#cdb079;--rule:#23262d;--tablehead:#1c1f25;--quote-bg:#1e222a}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:20px/1.7 Iowan Old Style,Palatino,Georgia,"Times New Roman",serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.nav{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;
+  gap:16px;padding:12px clamp(16px,5vw,40px);background:var(--bg);border-bottom:1px solid var(--line);
+  font-family:system-ui,-apple-system,Segoe UI,sans-serif;font-size:15px}
+.nav .brand{font-weight:700;letter-spacing:.02em;color:var(--ink);text-decoration:none}
+.nav .right{display:flex;align-items:center;gap:18px}
+.nav a{color:var(--muted);text-decoration:none}
+.nav a:hover{color:var(--ink)}
+.nav button{background:none;border:1px solid var(--line);color:var(--muted);border-radius:999px;
+  width:34px;height:34px;cursor:pointer;font-size:15px;line-height:1}
+.nav button:hover{color:var(--ink)}
+main{max-width:680px;margin:0 auto;padding:0 22px 96px}
+.byline{margin:18px 0 0;font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+.byline a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.byline a:hover{color:var(--ink)}
+h1{font-size:clamp(34px,6vw,52px);line-height:1.08;letter-spacing:-.01em;margin:48px 0 8px}
+h2{font-size:26px;line-height:1.2;margin:52px 0 6px}
+h3{font-size:20px;line-height:1.25;margin:32px 0 4px;color:var(--muted);font-weight:600}
+p{margin:0 0 20px}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:.5px}
+strong{font-weight:700}
+hr{border:0;border-top:1px solid var(--rule);margin:44px 0}
+blockquote{margin:30px 0;padding:14px 22px;border-left:3px solid var(--accent);
+  background:var(--quote-bg);border-radius:0 8px 8px 0;color:var(--ink);font-size:20px;font-style:italic}
+blockquote p{margin:0 0 10px}
+blockquote p:last-child{margin:0}
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:15.5px;font-family:system-ui,sans-serif}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+thead th{background:var(--tablehead);border-bottom:2px solid var(--line);font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;
+  background:color-mix(in srgb,var(--ink) 7%,transparent);padding:.1em .35em;border-radius:4px}
+.contents{margin:34px 0 8px;border:1px solid var(--line);border-radius:10px;
+  font-family:system-ui,sans-serif;font-size:15px}
+.contents summary{cursor:pointer;padding:5px 18px;color:var(--muted);font-weight:600;list-style:none}
+.contents summary::-webkit-details-marker{display:none}
+.contents summary::before{content:"\203A";display:inline-block;padding-right:7px;transition:transform .15s}
+.contents[open] summary::before{transform:rotate(90deg)}
+.contents nav{display:flex;flex-direction:column;padding:0 16px 14px}
+.contents a{color:var(--muted);text-decoration:none;padding:4px 0}
+.contents a:hover{color:var(--ink)}
+.contents .toc-h1{color:var(--ink);font-weight:700;margin-top:10px}
+.contents .toc-h2{padding-left:16px}
+footer{max-width:680px;margin:0 auto;padding:28px 22px 64px;border-top:1px solid var(--rule);
+  color:var(--muted);font-family:system-ui,sans-serif;font-size:14px}
+footer a{color:var(--muted)}
+</style>
+<script>try{var t=localStorage.getItem("fallacy-cutter-theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+</head>
+<body>
+<nav class="nav">
+  <a class="brand" href="./">fallacy-cutter</a>
+  <div class="right">
+    <a href="./">Essay</a>
+    <a href="about.html">About</a>
+    <a href="https://github.com/Kirill-Kruglov/fallacy-cutter">GitHub</a>
+    <button id="theme" type="button" aria-label="Toggle light / dark">&#9682;</button>
+  </div>
+</nav>
+<main id="top">
+<p class="byline">By Kirill Kruglov, developed in dialogue with Codex and Claude — <a href="about.html">how this was made</a>.</p>
+<details class="contents">
+<summary>Contents</summary>
+<nav>
+<a class="toc-h2" href="#introduction">Introduction</a>
+<a class="toc-h2" href="#part-i-the-mood">Part I — The Mood</a>
+<a class="toc-h2" href="#part-ii-the-knife">Part II — The Knife</a>
+<a class="toc-h2" href="#part-iii-for-agents">Part III — For Agents</a>
+<a class="toc-h2" href="#part-iv-the-honest-limit">Part IV — The Honest Limit</a>
+<a class="toc-h2" href="#closing">Closing</a>
+</nav>
+</details>
+<article>
+<h1 id="instruments-not-intentions">Instruments, Not Intentions</h1>
+<h3
+id="how-to-run-an-honest-experiment-when-you-cannot-trust-the-experimenter-including-yourself">How
+to run an honest experiment when you cannot trust the experimenter —
+including yourself</h3>
+<hr />
+<h2 id="introduction">Introduction</h2>
+<p>There is a quiet assumption underneath almost everything we call
+research: that the person running the experiment wants the truth. We
+check for competence, for statistics, for peer review — but the first
+line of defense is always assumed to be the experimenter’s own honesty.
+Do not fake the data. Do not move the goalposts. Do not read the answer
+key before the test.</p>
+<p>I want to take that assumption away, because I stopped believing it —
+first about other people, then, more usefully, about myself.</p>
+<p>This is a small project with a large claim behind it: that
+trustworthy experiments should not depend on the goodness of the
+experimenter. Not because experimenters are bad, but because good
+intentions are the wrong material to build a guarantee out of. They are
+invisible, unauditable, and — this is the part that took me longest to
+accept — they fail silently, most often in exactly the person most sure
+they are being careful.</p>
+<p>The project is a knife: a small instrument that a human or an AI
+agent can run their work through, such that what comes out the other
+side is either a result that carries its own proof of validity, or an
+honest refusal. Nothing in between. No “trust me.”</p>
+<h2 id="part-i-the-mood">Part I — The Mood</h2>
+<p>I did not build this because I caught someone cheating. I built it
+because I audited my own work as a hostile reviewer would, and the audit
+found the author’s mistakes before it found anyone else’s.</p>
+<p>I had registered success thresholds <em>after</em> seeing the
+results, and committed both together so the order was invisible. I had
+an “audit” that certified cleanliness by returning a hardcoded
+<em>yes</em> — a report of virtue, not a check of it. I had a learner
+that looked blind but was being handed the answer through a side channel
+I had built and forgotten. Each of these, alone, is the kind of thing
+you wave away: <em>I know what I meant. I wasn’t really cheating.</em>
+Together they are the whole disease.</p>
+<p>None of it felt like dishonesty from the inside. That is the point.
+Self-deception in research is not a moral failure that better people
+avoid; it is a structural one that the ordinary machinery of hope
+produces on its own. You want the result. The wanting does not announce
+itself. It arrives wearing the result’s clothes.</p>
+<blockquote>
+<p>A method that depends on the author’s good intentions is not a
+method. It is a mood.</p>
+</blockquote>
+<p>And a mood cannot be inspected, cannot be transferred, and cannot be
+trusted at scale. If honesty is a feeling the experimenter is supposed
+to have, then research is only as reliable as the most hopeful person’s
+ability to notice their own hope — which is to say, not very.</p>
+<h2 id="part-ii-the-knife">Part II — The Knife</h2>
+<p>The repair is not to try harder to be honest. It is to stop making
+honesty the load-bearing element. Turn each discipline from a promise
+into a constraint the run <em>cannot violate</em>, and let a separate
+program — one you cannot quietly reach into — be the thing that
+certifies the result.</p>
+<p>Concretely, that means turning soft intentions into hard
+mechanisms:</p>
+<ul>
+<li><strong>“I registered the threshold first”</strong> becomes a
+<em>two-phase commit</em>: the preregistration is locked into one
+commit, the results into a later one, and the runner refuses to proceed
+unless the lock is a strict ancestor of the run. The order is not
+reported; it is a fact about the git history that a machine checks.</li>
+<li><strong>“My learner didn’t peek at the answer”</strong> becomes an
+<em>AST scan</em> of the fit path — real static analysis, not
+self-report — that fails closed if a forbidden truth-name appears
+anywhere it could leak, down to a dictionary string key. A check that
+can only say “I looked and it’s fine” is replaced by one that shows its
+work or reports <code>NOT_VERIFIABLE</code>, which counts as
+failure.</li>
+<li><strong>“The result is valid because I say so”</strong> becomes a
+<em>provenance signature</em> that an independent verifier checks — and
+rejects by default when it is absent, no matter how good the numbers
+look.</li>
+</ul>
+<p>The governing axiom is <strong>fail closed</strong>. Any ambiguity,
+any missing artifact, any claim that cannot be checked mechanically
+resolves to FAIL. Nothing passes by default. An instrument that lets
+things through when it is unsure is not an instrument; it is a mood with
+a progress bar.</p>
+<p>The most encouraging moment of the whole effort was not a success. It
+was an <em>invalid</em> result: a run that produced clean,
+publishable-looking numbers and then marked itself <code>INVALID</code>,
+because it had not passed through the enforcing pipeline and carried no
+provenance. The path of least resistance was to present the table as a
+finding. The instrument did not take that path. It cut the result
+instead of the corner.</p>
+<p>And then the knife cut me. Re-run through the instrument, some of my
+earlier, celebrated results did not survive with their meanings intact.
+The numbers barely moved; what moved was what they were <em>allowed to
+mean</em>.</p>
+<blockquote>
+<p>A methodology is real only when it changes your conclusion against
+your own wishes.</p>
+</blockquote>
+<p>Until it has cost you something you wanted, you do not know whether
+you built an instrument or a mirror.</p>
+<h2 id="part-iii-for-agents">Part III — For Agents</h2>
+<p>This matters more now than it did five years ago, because the
+experimenter is increasingly not a person.</p>
+<p>We are handing research — literature search, hypothesis generation,
+data analysis, whole pipelines — to AI systems that are astonishingly
+capable and completely willing to tell you what you hoped to hear. An
+LLM’s “good intentions” are an even weaker guarantee than a human’s: it
+has no stake in the truth, no memory of being burned, and a strong pull
+toward the answer its prompt seems to want. If honesty-as-a-feeling was
+a poor foundation for human research, it is no foundation at all for
+automated research at scale.</p>
+<p>The instrument does not care who runs it. Human, Codex, Claude, or a
+pipeline none of us has met yet — the same gate applies. Run your work
+through it and you get either a provenance-signed valid decision or a
+fail-closed stop, <em>independent of how good you are at research</em>,
+and independent of whether you even understood the discipline you just
+satisfied. That is the actual promise:</p>
+<blockquote>
+<p>A well-meaning novice and a careless expert, run through the same
+knife, both get a result that is either honestly valid or honestly
+refused.</p>
+</blockquote>
+<p>There is exactly one way to get a false pass: deliberately attack the
+instrument itself — rewrite the verifier, forge the signature, disable
+the hook. That is a different and more honest kind of failure. It is no
+longer self-deception; it is sabotage, and sabotage at least leaves
+fingerprints. The knife cannot stop a determined liar. It can stop the
+far more common thing: an honest person, or an eager machine, fooling
+themselves.</p>
+<h2 id="part-iv-the-honest-limit">Part IV — The Honest Limit</h2>
+<p>I have to apply the knife to the knife, or this essay would be
+exactly the kind of clean-looking overclaim it is supposed to
+prevent.</p>
+<p>What is real, today, is the <em>instrument</em>. The eight
+fail-closed modules exist, run, and are covered by adversarial tests —
+each one reproduces a real mistake and is red without its defense, green
+with it. There is a worked example you can reproduce from scratch: it
+comes out the other side as a valid, signed decision, and its control
+fails exactly where it should.</p>
+<p>What is <em>not</em> finished is the <em>transferable
+methodology</em> — the self-contained playbook a fresh agent could
+execute from prose alone, with no expert standing behind it. The
+disciplinary method is real and demonstrated; but right now it lives
+partly in code and partly in the tacit practice of people who have
+already internalized it. An honest pass over this exact question found
+that the method transfers through worked examples and expert habit,
+<em>not yet</em> through a document a stranger could pick up cold. That
+gap is documented in the repository, not hidden, because a
+fallacy-cutter that could not cut its own overclaims would be the first
+thing it should reject.</p>
+<p>So this is not a finished method wearing the clothes of one. It is a
+working instrument and an honest map of what still has to be built on
+top of it.</p>
+<h2 id="closing">Closing</h2>
+<p>The dream is not a more honest researcher. It is research whose
+validity does not depend on the researcher being honest — a discipline
+you could hand to a stranger, or to a machine, and still trust the
+output, because the trust lives in the instrument and not in the hand
+that holds it.</p>
+<blockquote>
+<p>The cut must not depend on the hand.</p>
+</blockquote>
+<p>That is the whole ambition. Build the instrument first, keep it
+fail-closed, let it cut you when you are wrong — and be honest about the
+part you have not built yet.</p>
+<hr />
+
+</article>
+</main>
+<footer>
+  <p><strong>fallacy-cutter</strong> — a fail-closed instrument and methodology for
+  trustworthy experiments by humans and AI agents:
+  <a href="https://github.com/Kirill-Kruglov/fallacy-cutter">github.com/Kirill-Kruglov/fallacy-cutter</a>.
+  The instrument is real and tested; the fully transferable playbook is a stated
+  goal, not yet finished — and that honesty is the point.</p>
+</footer>
+<script>
+(function(){
+  var root=document.documentElement, KEY="fallacy-cutter-theme";
+  var saved=localStorage.getItem(KEY);
+  if(saved) root.setAttribute("data-theme",saved);
+  document.getElementById("theme").addEventListener("click",function(){
+    var cur=root.getAttribute("data-theme");
+    if(!cur) cur=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
+    var next=cur==="dark"?"light":"dark";
+    root.setAttribute("data-theme",next);
+    localStorage.setItem(KEY,next);
+  });
+})();
+</script>
+</body>
+</html>
