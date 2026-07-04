@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Appendix A — What the Knife Checks</title>
+<meta name="description" content="Every harness module: what it catches, what structurally slips past it, the false-pass taxonomy, what VALID means, and the independence roadmap.">
+<meta property="og:title" content="Appendix A — What the Knife Checks">
+<meta property="og:description" content="Every harness module: what it catches, what structurally slips past it, the false-pass taxonomy, what VALID means, and the independence roadmap.">
+<meta property="og:type" content="article">
+<style>
+:root{--bg:#fbfaf6;--ink:#1d1c1a;--muted:#6b6760;--line:#e4e0d6;--accent:#7a5b2e;--rule:#ece8de;--tablehead:#f3f0e8;--quote-bg:#f1ead9}
+:root[data-theme=dark]{--bg:#15171c;--ink:#dfdcd4;--muted:#9a958c;--line:#2a2d34;--accent:#cdb079;--rule:#23262d;--tablehead:#1c1f25;--quote-bg:#1e222a}
+@media (prefers-color-scheme:dark){:root:not([data-theme]){--bg:#15171c;--ink:#dfdcd4;--muted:#9a958c;--line:#2a2d34;--accent:#cdb079;--rule:#23262d;--tablehead:#1c1f25;--quote-bg:#1e222a}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:20px/1.7 Iowan Old Style,Palatino,Georgia,"Times New Roman",serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.nav{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;
+  gap:16px;padding:12px clamp(16px,5vw,40px);background:var(--bg);border-bottom:1px solid var(--line);
+  font-family:system-ui,-apple-system,Segoe UI,sans-serif;font-size:15px}
+.nav .brand{font-weight:700;letter-spacing:.02em;color:var(--ink);text-decoration:none}
+.nav .right{display:flex;align-items:center;gap:18px}
+.nav a{color:var(--muted);text-decoration:none}
+.nav a:hover{color:var(--ink)}
+.nav button{background:none;border:1px solid var(--line);color:var(--muted);border-radius:999px;
+  width:34px;height:34px;cursor:pointer;font-size:15px;line-height:1}
+.nav button:hover{color:var(--ink)}
+main{max-width:680px;margin:0 auto;padding:0 22px 96px}
+.byline{margin:18px 0 0;font-family:system-ui,sans-serif;font-size:14px;color:var(--muted)}
+.byline a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+.byline a:hover{color:var(--ink)}
+h1{font-size:clamp(34px,6vw,52px);line-height:1.08;letter-spacing:-.01em;margin:48px 0 8px}
+h2{font-size:26px;line-height:1.2;margin:52px 0 6px}
+h3{font-size:20px;line-height:1.25;margin:32px 0 4px;color:var(--muted);font-weight:600}
+p{margin:0 0 20px}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:.5px}
+strong{font-weight:700}
+hr{border:0;border-top:1px solid var(--rule);margin:44px 0}
+blockquote{margin:30px 0;padding:14px 22px;border-left:3px solid var(--accent);
+  background:var(--quote-bg);border-radius:0 8px 8px 0;color:var(--ink);font-size:20px;font-style:italic}
+blockquote p{margin:0 0 10px}
+blockquote p:last-child{margin:0}
+table{width:100%;border-collapse:collapse;margin:24px 0;font-size:15.5px;font-family:system-ui,sans-serif}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line)}
+thead th{background:var(--tablehead);border-bottom:2px solid var(--line);font-weight:600}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86em;
+  background:color-mix(in srgb,var(--ink) 7%,transparent);padding:.1em .35em;border-radius:4px}
+.contents{margin:34px 0 8px;border:1px solid var(--line);border-radius:10px;
+  font-family:system-ui,sans-serif;font-size:15px}
+.contents summary{cursor:pointer;padding:5px 18px;color:var(--muted);font-weight:600;list-style:none}
+.contents summary::-webkit-details-marker{display:none}
+.contents summary::before{content:"\203A";display:inline-block;padding-right:7px;transition:transform .15s}
+.contents[open] summary::before{transform:rotate(90deg)}
+.contents nav{display:flex;flex-direction:column;padding:0 16px 14px}
+.contents a{color:var(--muted);text-decoration:none;padding:4px 0}
+.contents a:hover{color:var(--ink)}
+.contents .toc-h1{color:var(--ink);font-weight:700;margin-top:10px}
+.contents .toc-h2{padding-left:16px}
+footer{max-width:680px;margin:0 auto;padding:28px 22px 64px;border-top:1px solid var(--rule);
+  color:var(--muted);font-family:system-ui,sans-serif;font-size:14px}
+footer a{color:var(--muted)}
+</style>
+<script>try{var t=localStorage.getItem("fallacy-cutter-theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+</head>
+<body>
+<nav class="nav">
+  <a class="brand" href="./">fallacy-cutter</a>
+  <div class="right">
+    <a href="./">Essay</a>
+    <a href="about.html">About</a>
+    <a href="https://github.com/Kirill-Kruglov/fallacy-cutter">GitHub</a>
+    <button id="theme" type="button" aria-label="Toggle light / dark">&#9682;</button>
+  </div>
+</nav>
+<main id="top">
+
+
+<article>
+<h1
+id="appendix-a-what-the-knife-checks-and-what-slips-past-it">Appendix A
+— What the Knife Checks, and What Slips Past It</h1>
+<p>The essay promises exactness about what a harness-signed result
+means. This appendix is that exactness: every module, what it catches
+(each one was taught by a real audit finding — a mistake I actually
+made), and what it structurally cannot catch. The second column is not
+modesty; it is the specification of where the next false pass will come
+from.</p>
+<h2 id="a.1-the-word-valid-defined">A.1 The word <code>VALID</code>,
+defined</h2>
+<p><code>gate_harness.verify_decision</code> prints <code>VALID</code>
+when a <code>decision.json</code> carries a
+<code>_harness_provenance</code> block written by the sanctioned runner,
+matching the current harness code hash, with every required check flag
+true. That word means, precisely:</p>
+<blockquote>
+<p><strong>harness-valid</strong> — machine-checkable evidence that the
+declared gates were satisfied, in the declared order, by the code whose
+hash is recorded.</p>
+</blockquote>
+<p>It does not mean the science is right. It cannot. A run with a
+meaningless question, a mismeasuring metric, or a control too weak to
+fire can be fully harness-valid and still be worthless. The verdict name
+is kept as <code>VALID</code> in the code because the verifier hashes
+the harness sources — renaming it would invalidate every decision
+already signed (the safe direction: the artifact record stays
+immutable). A future major version will rename the verdict to something
+that cannot be misread — <code>GATE_PASS</code> — with a fresh
+provenance line. Until then, every document in this repository reads
+<code>VALID</code> as <em>harness-valid, procedural compliance under the
+declared specification</em>, never as <em>scientifically valid</em>.</p>
+<h2 id="a.2-the-modules-caught-vs.-not-caught">A.2 The modules: caught
+vs. not caught</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>module</th>
+<th>taught by (real finding)</th>
+<th>what it catches</th>
+<th>what it structurally cannot catch</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>prereg.py</code></td>
+<td>thresholds registered after results, committed together (#1, #2,
+#9)</td>
+<td>unlocked or edited preregistrations; thresholds changed between
+gates without a written rationale; runs whose prereg is not a strict git
+ancestor</td>
+<td>thresholds tuned in exploratory runs that never touched the record,
+then “preregistered” fresh; a rationale that is written but bad</td>
+</tr>
+<tr class="even">
+<td><code>hooks/pre-commit</code></td>
+<td>prereg + results in one atomic commit (#1)</td>
+<td>committing a gate’s <code>PREREG.*</code> together with its
+<code>outputs/</code>; silent edits of a locked prereg</td>
+<td>history rewritten before publication; work done outside the hooked
+clone</td>
+</tr>
+<tr class="odd">
+<td><code>leakage_scanner.py</code></td>
+<td>classifier branching on the generator label; audits returning
+hardcoded <code>yes</code> (#3, #4)</td>
+<td>forbidden truth-names anywhere in the fit path’s AST — parameters,
+identifiers, attributes, dict string keys, closures, globals; audit
+fields that are constants rather than computations
+(<code>NOT_VERIFIABLE</code> → FAIL)</td>
+<td>truth renamed to an innocent word; leakage through data
+<em>values</em> rather than code references; channels in functions never
+registered for scanning</td>
+</tr>
+<tr class="even">
+<td><code>calibration_audit.py</code></td>
+<td>a “sparse” anchor set heavier than the complete one (#7)</td>
+<td>anchor volume above the declared bound; sparse ≥ complete</td>
+<td>anchor <em>placement</em> that smuggles the answer at legal
+volume</td>
+</tr>
+<tr class="odd">
+<td><code>seed_policy.py</code></td>
+<td>conclusions from a single lucky seed (#8)</td>
+<td>core metrics with fewer than the required seeds →
+<code>INSUFFICIENT_SEEDS</code>, never PASS</td>
+<td>statistically dependent seeds; selective emphasis across many
+passing metrics</td>
+</tr>
+<tr class="even">
+<td><code>tautology_check.py</code></td>
+<td>a world built so the contrast was guaranteed (#5)</td>
+<td><code>information_ratio</code> below the mandatory floor → immutable
+<code>construction_may_be_tautological</code>; weak-baseline theater
+(two strong baselines are mandatory)</td>
+<td>constructions trivial in ways variance ratios do not see</td>
+</tr>
+<tr class="odd">
+<td><code>evaluation_oracle.py</code></td>
+<td><code>truth_axes=3</code> handed to the evaluator (#6)</td>
+<td>ground-truth hints as literal keyword arguments or dict values at
+evaluation call sites; unscanned non-entrypoints</td>
+<td>hints encoded non-literally, or arriving through the data
+itself</td>
+</tr>
+<tr class="even">
+<td><code>runner.py</code></td>
+<td>all of the above at execution time</td>
+<td>refuses to run without a verified lock, passing leakage scan, and
+tautology report; folds oracle hints into the decision; forbids the
+experiment overriding harness-only flags</td>
+<td>a wrong question executed flawlessly</td>
+</tr>
+<tr class="odd">
+<td><code>verify_decision.py</code></td>
+<td>citing results that bypassed the runner (§1.7)</td>
+<td>decisions with no provenance, a stale harness hash, or false check
+flags — INVALID regardless of how good the numbers look</td>
+<td>mistakes it shares with the runner; bugs in itself</td>
+</tr>
+</tbody>
+</table>
+<p>Read the last column as one sentence: <strong>the knife catches the
+fallacies it has been taught; against unnamed ones it is as blind as its
+author.</strong></p>
+<h2 id="a.3-the-false-pass-taxonomy">A.3 The false-pass taxonomy</h2>
+<p>Ways to get a harness-valid result that is scientifically worthless,
+none of which require attacking the instrument:</p>
+<ol type="1">
+<li>an unmodeled leakage channel (the scanner’s forbidden-name list is
+name-based);</li>
+<li>a truth label semantically renamed;</li>
+<li>thresholds informed by off-the-record exploratory runs;</li>
+<li>a control that cannot fire (so “passing the control” is
+vacuous);</li>
+<li>a metric that measures the wrong object;</li>
+<li>dependent observations dressed as independent seeds;</li>
+<li>a generator that makes the task trivial in a way
+<code>tautology_check</code> does not model;</li>
+<li>a shared wrong assumption between runner and verifier;</li>
+<li>an honestly meaningless question, flawlessly executed;</li>
+<li>a bug in the verifier.</li>
+</ol>
+<p>Deliberate sabotage — editing the verifier, forging provenance — is
+merely the eleventh entry, and the only one that leaves fingerprints on
+purpose.</p>
+<h2 id="a.4-the-status-of-independent-verification">A.4 The status of
+“independent verification”</h2>
+<p>What is true: the verifier is a separate module, and the runner
+cannot make it lie — bypassing the runner produces a decision the
+verifier rejects.</p>
+<p>What is not yet true: independence in the institutional sense. Same
+repository, same author, same trust root, same conceptual assumptions,
+editable in the same commit.</p>
+<p>Roadmap, in increasing order of cost and value:</p>
+<ol type="1">
+<li>extract a minimal verifier into its own package with a frozen,
+implementation-free specification;</li>
+<li>a second implementation written against the spec by someone who has
+never read the first;</li>
+<li>an external maintainer for the spec;</li>
+<li>an adversarial audit by a party with an incentive to break it;</li>
+<li>independent replication of the gated experiments themselves — which
+outweighs all of the above.</li>
+</ol>
+<h2 id="a.5-the-two-rooms">A.5 The two rooms</h2>
+<p>Fail-closed is the right default for <strong>confirmation</strong>:
+frozen spec, preregistered thresholds, citable output. Applied to
+everything, it would sterilize exploration and teach a researcher to ask
+only easily-formalized questions — checklist compliance as the new
+Goodhart target. So the working discipline is two explicitly separate
+modes:</p>
+<ul>
+<li><strong>exploration</strong> — ambiguity allowed, instruments
+optional, strong claims forbidden; nothing from this room is
+citable;</li>
+<li><strong>confirmation</strong> — the knife, in full; only what passes
+here may be cited, and only at the strength the gates actually
+license.</li>
+</ul>
+<p>The failure mode is not being in either room. It is pretending to be
+in the one you are not — exploratory results dressed as confirmed, or
+exploration strangled by confirmation’s rules until only trivial
+questions survive.</p>
+<h2 id="a.6-where-the-artifacts-live">A.6 Where the artifacts live</h2>
+<ul>
+<li>The instrument: <a
+href="https://github.com/Kirill-Kruglov/fallacy-cutter/blob/main/gate_harness/"><code>gate_harness/</code></a> — eight
+modules, adversarial tests (<code>gate_harness/tests/</code>), each red
+without its defense and green with it.</li>
+<li>The worked example: <a
+href="https://github.com/Kirill-Kruglov/fallacy-cutter/blob/main/examples/hello_gate/"><code>examples/hello_gate/</code></a>
+— reproducible from scratch; CI regenerates its decision byte-for-byte
+and verifies it.</li>
+<li>The honest gap: <a
+href="https://github.com/Kirill-Kruglov/fallacy-cutter/blob/main/methodology/SUMMARY.md"><code>methodology/SUMMARY.md</code></a>
+and <a
+href="https://github.com/Kirill-Kruglov/fallacy-cutter/blob/main/methodology/03_not_yet_method.md"><code>methodology/03_not_yet_method.md</code></a>
+— the usability test that proved the method does not yet transfer
+through prose alone.</li>
+<li>The provenance contract: <a
+href="https://github.com/Kirill-Kruglov/fallacy-cutter/blob/main/gate_harness/verify_decision.py"><code>gate_harness/verify_decision.py</code></a>
+— the exact conditions under which <code>VALID</code> is printed, in
+under a hundred lines.</li>
+</ul>
+
+</article>
+</main>
+<footer>
+  <p><strong>fallacy-cutter</strong> — a fail-closed instrument and methodology for
+  trustworthy experiments by humans and AI agents:
+  <a href="https://github.com/Kirill-Kruglov/fallacy-cutter">github.com/Kirill-Kruglov/fallacy-cutter</a>.
+  The instrument is real and tested; the fully transferable playbook is a stated
+  goal, not yet finished — and that honesty is the point.</p>
+</footer>
+<script>
+(function(){
+  var root=document.documentElement, KEY="fallacy-cutter-theme";
+  var saved=localStorage.getItem(KEY);
+  if(saved) root.setAttribute("data-theme",saved);
+  document.getElementById("theme").addEventListener("click",function(){
+    var cur=root.getAttribute("data-theme");
+    if(!cur) cur=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";
+    var next=cur==="dark"?"light":"dark";
+    root.setAttribute("data-theme",next);
+    localStorage.setItem(KEY,next);
+  });
+})();
+</script>
+</body>
+</html>

@@ -5,20 +5,39 @@
 
 *A knife for experiments that should fail closed before they fool their author.*
 
-**[📖 Read the essay](https://kirill-kruglov.github.io/fallacy-cutter/)** ·
+**[📖 Read the essay](https://kirill-kruglov.github.io/fallacy-cutter/)**
+([md](essay/instruments-not-intentions.md) ·
+[PDF](essay/instruments-not-intentions.pdf)) ·
 **[▶ Worked example](examples/hello_gate/)** ·
+**[Appendix A](https://kirill-kruglov.github.io/fallacy-cutter/appendix-a.html)** ·
 **[How it was made](https://kirill-kruglov.github.io/fallacy-cutter/about.html)**
 
 `fallacy-cutter` is a small extraction from the Ascesis research forge: the
 `gate_harness` instrument plus the evidence-tagged methodology it began to
 enforce. It is meant for trustworthy experiments run by humans and AI agents: run
-work through the knife and the result should be either a provenance-signed
-`VALID` `decision.json`, or an honest refusal that cannot be cited as success.
+work through the knife and the result is either a `decision.json` carrying
+machine-checkable evidence that every declared gate was satisfied, or a
+fail-closed refusal that cannot be cited as success.
 
-The mission in one sentence: any agent using the instrument gets either a
-provenance-signed valid result or a fail-closed stop, independent of the agent's
-own research skill, as long as the agent is not deliberately attacking the
-instrument itself.
+The mission in one sentence: the instrument removes the researcher's *virtue*
+from the trust chain — not the researcher's *skill*. What was declared, when it
+was frozen, and what touched the data become facts a stranger can check without
+trusting anyone; whether the right thing was declared remains research skill,
+made legible instead of taken on faith.
+
+## What `VALID` means (and does not)
+
+The verifier's verdict word is `VALID`. Read it as defined: **harness-valid** —
+procedural compliance under the declared specification (provenance present,
+prereg locked before the run, declared scans passed). It is *not* a claim of
+scientific validity: a run with a meaningless question, a mismeasuring metric, or
+a control too weak to fire can be fully harness-valid and still be worthless.
+There are many ways to get a false pass without attacking the instrument — the
+complete taxonomy is in
+[Appendix A](essay/appendices/A-what-the-knife-checks.md). The verdict keeps its
+name in code because the verifier hashes the harness sources (renaming would
+invalidate every already-signed decision); a future major version renames it to
+`GATE_PASS`.
 
 ## Status: instrument real, portable playbook unfinished
 
@@ -123,11 +142,45 @@ and other source-specific material; that is provenance, not accidental residue.
 ## What this does not claim
 
 - It is not yet a complete domain-neutral playbook a fresh agent can execute from
-  prose alone.
-- It is not proof against malicious actors modifying the instrument.
+  prose alone — the repository's own usability test proved exactly that.
+- It is not proof of scientific validity: harness-valid means the declared gates
+  were satisfied, nothing more (see Appendix A's false-pass taxonomy).
+- It is not proof against malicious actors modifying the instrument — nor against
+  honest gaps the gates were never taught to see.
+- The verifier is separated from the runner, but not independent in the
+  institutional sense: same repository, same author, same trust root.
 - It is not a guarantee that a good scientific question has been asked.
 - It is not a replacement for judgement; it is a way to make missing evidence,
   hidden thresholds, leakage, and provenance failures mechanically harder to hide.
+
+## Roadmap
+
+In increasing order of cost and value:
+
+1. **Two modes, explicitly.** Exploration (ambiguity allowed, strong claims
+   forbidden, nothing citable) vs. confirmation (the knife in full). Fail-closed
+   applied to everything would sterilize early research.
+2. **Independent verifier.** A minimal verifier as its own frozen-spec package; a
+   second implementation written against the spec by someone who never read the
+   first; an external maintainer; `GATE_PASS` as the verdict name.
+3. **Adversarial audit** by a party with an incentive to break the gates.
+4. **Independent replication** of the gated experiments — which outweighs
+   everything above.
+
+## The triptych
+
+This repository is one panel of three, sharing a single thesis — *do not try to
+certify intentions; build contact, consequences, and constraints that can be
+checked* — and a single honest caveat: all three come from one forge, one author,
+the same AI partners. The knife is real, and it cuts; but it is still in the same
+hand. Independent replication is invited and would outweigh any further internal
+check.
+
+- [**justitia**](https://github.com/Kirill-Kruglov/justitia) — what keeps a world
+  of powerful, evolving agents livable when no one can read anyone's soul.
+- [**proxylimen**](https://github.com/Kirill-Kruglov/proxylimen) — where a mind's
+  world comes from, and where blind derivation measurably breaks.
+- **fallacy-cutter** (this repo) — the fail-closed instrument both were cut with.
 
 ## License
 

@@ -152,6 +152,8 @@ def page(title, description, body, *, contents="", byline=""):
 def main():
     DOCS.mkdir(exist_ok=True)
     essay = pandoc(ROOT / "essay" / "instruments-not-intentions.md")
+    # the essay links the appendix by its repo-relative path; on the site it is a page
+    essay = essay.replace("appendices/A-what-the-knife-checks.md", "appendix-a.html")
     contents = (f'<details class="contents">\n<summary>Contents</summary>\n'
                 f'<nav>\n{toc_from(essay)}\n</nav>\n</details>')
     (DOCS / "index.html").write_text(page(
@@ -168,7 +170,16 @@ def main():
         "and Claude, behind a harness that refuses to certify unprovenanced results.",
         about,
     ), encoding="utf-8")
-    print(f"wrote {DOCS/'index.html'} and {DOCS/'about.html'}")
+    appendix = pandoc(ROOT / "essay" / "appendices" / "A-what-the-knife-checks.md")
+    # repo-relative links inside the appendix should point at GitHub, not the site
+    appendix = re.sub(r'href="\.\./\.\./', f'href="{REPO}/blob/main/', appendix)
+    (DOCS / "appendix-a.html").write_text(page(
+        "Appendix A — What the Knife Checks",
+        "Every harness module: what it catches, what structurally slips past it, the "
+        "false-pass taxonomy, what VALID means, and the independence roadmap.",
+        appendix,
+    ), encoding="utf-8")
+    print(f"wrote {DOCS/'index.html'}, {DOCS/'about.html'}, {DOCS/'appendix-a.html'}")
 
 
 if __name__ == "__main__":
