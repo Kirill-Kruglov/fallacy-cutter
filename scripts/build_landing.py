@@ -127,7 +127,7 @@ FOOTER = f"""<footer>
   goal, not yet finished — and that honesty is the point.</p>
 </footer>"""
 
-BYLINE = ('<p class="byline">By Kirill Kruglov, developed in dialogue with Codex and Claude'
+BYLINE = ('<p class="byline">By Kirill Kruglov, developed in dialogue with Codex, Claude, and Fable'
           ' — <a href="about.html">how this was made</a>.</p>')
 
 
