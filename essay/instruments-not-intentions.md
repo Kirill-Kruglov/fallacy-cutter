@@ -185,6 +185,18 @@ expert habit, *not yet* through a document a stranger could pick up cold. That g
 documented in the repository, not hidden, because a fallacy-cutter that could not cut
 its own overclaims would be the first thing it should reject.
 
+*Update (July 2026).* The first field test has now run: a fresh agent harnessed a
+foreign project — [justitia](https://github.com/Kirill-Kruglov/justitia) — using this
+repository plus an expert-written gate specification, and produced three
+provenance-signed decisions: one exact replay confirmation, and two preregistered
+kill-conditions that fired and were published as-is. The instrument ported verbatim.
+The diagnosis above held too: the agent still needed the expert's spec, logged six
+places where these documents were not enough — and the harness itself failed to catch
+a fail-open default in its own gate wiring; an external review caught it. The knife
+cuts experiments; its own handle still needs watching. The full accounting is
+[methodology/04](https://github.com/Kirill-Kruglov/fallacy-cutter/blob/main/methodology/04_first_transfer_test.md),
+and the revision ledger at the end of this essay records what changed.
+
 Two more limits, and they are the deepest ones.
 
 The verifier is a separate module from the runner it checks — deliberately, so that a
@@ -228,6 +240,30 @@ That is the whole ambition, and today it is an ambition, not a fact: the hand st
 shapes the blade. Build the instrument first, keep it fail-closed, let it cut you when
 you are wrong, be honest about the part you have not built — and then hand the knife
 to someone else.
+
+---
+
+## Revisions
+
+This essay corrects itself in public. Substantive changes to claims — never style —
+are listed here, each with the evidence that forced it. Inline *Update* notes mark
+the exact passages.
+
+**July 4, 2026 — external review pass.** The essay's own promises were cut down:
+"proof of validity" became machine-checkable evidence that the declared gates were
+satisfied; "exactly one way to a false pass" was replaced by a ten-entry taxonomy
+needing no sabotage; "independent of research skill" became independence from
+*virtue*, not skill; the verifier's separation was demoted from independence to
+separation of concerns; the same-hand limit was stated plainly.
+
+**July 7, 2026 — first field transfer test.** The knife harnessed a foreign project
+([justitia](https://github.com/Kirill-Kruglov/justitia)): the instrument ported
+verbatim and signed three decisions, including two preregistered kills published
+as-is — but the agent still needed an expert-written spec, six documentation gaps
+were logged, and a fail-open default in the gate wiring was caught by review, not by
+the harness. "Not yet shown to transfer" became "tested once, partially — instrument
+yes, playbook still through an expert"
+([methodology/04](https://github.com/Kirill-Kruglov/fallacy-cutter/blob/main/methodology/04_first_transfer_test.md)).
 
 ---
 
