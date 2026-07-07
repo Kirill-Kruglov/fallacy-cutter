@@ -77,9 +77,29 @@ Six gaps logged in `TRANSFER_LOG.md`, verbatim in the log, summarized:
   a documented vendor-diff rule; a `seed_policy` hook in the runner; a
   domain-tautology recipe; a constant-report detector.
 
+## Second wave on the same host (FACT, July 2026)
+
+Three more gates ran days later on the same host project: a prospective
+held-out world (FAIL as a boundary finding), an **engineering equivalence
+gate** for a substrate extension (PASS: with three new dials at neutral
+defaults, 18/18 committed headline cells reproduced exactly, under an explicit
+no-extra-RNG contract), and a prospective five-dial isolation (FAIL on all
+three preregistered hypotheses, published as-is). Two observations for the
+methodology:
+
+- The equivalence-gate pattern — *extend the model only behind a preregistered
+  gate whose expectation is byte-identical behavior at neutral defaults* — is a
+  reusable discipline this repository did not document; it should join the
+  playbook.
+- The transfer log gained **one** new entry in wave 2, against six in wave 1,
+  with the same agent and the same documents. **INFERENCE:** the method
+  transfers through accumulated practice faster than through prose — which is
+  the task-spec diagnosis of `03_not_yet_method.md` restated as a learning
+  curve, not a refutation of it.
+
 ## What this does not show (FACT)
 
-One test, one host project, same forge: the reviewer who wrote the gate spec and
-the agent that executed it share context with this repository's author. It does
-not show that a stranger, with no expert in the loop, could do the same — that
-remains the unmet bar from `SUMMARY.md`.
+One test (in two waves), one host project, same forge: the reviewer who wrote
+the gate specs and the agent that executed them share context with this
+repository's author. It does not show that a stranger, with no expert in the
+loop, could do the same — that remains the unmet bar from `SUMMARY.md`.
