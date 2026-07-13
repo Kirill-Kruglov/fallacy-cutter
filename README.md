@@ -57,6 +57,12 @@ documentation gaps, and the harness missed a fail-open defect in its own gate
 wiring that external review caught. Full accounting:
 [`methodology/04_first_transfer_test.md`](methodology/04_first_transfer_test.md).
 
+A second wave on the same host added three more gates: a held-out-world boundary,
+an engineering-equivalence pass for a neutral substrate extension, and a
+five-dial isolation failure. The transfer log added one new gap after six in the
+first wave. This is evidence for learning through accumulated practice, not for a
+self-sufficient prose playbook.
+
 That distinction is the product. A method that cuts fallacies must be able to cut
 its own overclaims.
 
@@ -82,8 +88,9 @@ lock, or missing provenance resolves to `FAIL`. Nothing passes by default.
   test is important because it exposed gaps instead of pretending the playbook was
   complete.
 - [`methodology/04_first_transfer_test.md`](methodology/04_first_transfer_test.md)
-  — the first field transfer test (justitia, July 2026): what ported, what did
-  not, and the fail-open defect the harness missed in its own glue code.
+  — two waves of the first field transfer test (justitia, July 2026): what
+  ported, what did not, the fail-open defect the harness missed in its own glue
+  code, and the reusable engineering-equivalence gate.
 - [`examples/`](examples/) — a runnable end-to-end example,
   [`hello_gate/`](examples/hello_gate/), that goes through the whole harness and
   comes out as a provenance-signed `VALID` decision (its control fails where it
@@ -167,13 +174,14 @@ and other source-specific material; that is provenance, not accidental residue.
 
 ## Roadmap
 
-In increasing order of cost and value (items 0a–0e are new, from the first
-field test — [`methodology/04`](methodology/04_first_transfer_test.md)):
+In increasing order of cost and value (the transfer items come from both waves
+of [`methodology/04`](methodology/04_first_transfer_test.md)):
 
 0. **Close the transfer gaps.** Worktree support in the hook installer; a
    documented vendor-diff rule; a `seed_policy` hook in the runner; a recipe for
    domain-specific tautology reports; a detector for constant (fail-open) audit
-   reports handed to `run_gate`.
+   reports handed to `run_gate`; and a documented engineering-equivalence gate
+   for extensions that must be behaviorally inert at neutral defaults.
 1. **Two modes, explicitly.** Exploration (ambiguity allowed, strong claims
    forbidden, nothing citable) vs. confirmation (the knife in full). Fail-closed
    applied to everything would sterilize early research.

@@ -298,6 +298,15 @@ accounting is <a
 href="https://github.com/Kirill-Kruglov/fallacy-cutter/blob/main/methodology/04_first_transfer_test.md">methodology/04</a>,
 and the revision ledger at the end of this essay records what
 changed.</p>
+<p><em>Second-wave update (July 2026).</em> Three more gates then ran on
+the same host: a prospective held-out world failed as a boundary
+finding; a substrate extension passed a preregistered
+engineering-equivalence gate, reproducing all 18 committed headline
+cells at neutral defaults under a no-extra-RNG contract; and a five-dial
+isolation failed all three preregistered hypotheses. The transfer log
+gained one new gap in this wave, after six in the first. That is
+evidence that accumulated practice travels; it is not evidence that the
+prose playbook can yet carry the method without an expert.</p>
 <p>Two more limits, and they are the deepest ones.</p>
 <p>The verifier is a separate module from the runner it checks —
 deliberately, so that a result which bypassed the runner cannot forge a
@@ -343,6 +352,85 @@ the hand still shapes the blade. Build the instrument first, keep it
 fail-closed, let it cut you when you are wrong, be honest about the part
 you have not built — and then hand the knife to someone else.</p>
 <hr />
+<h2
+id="appendix-a-what-the-knife-checks-and-what-slips-past-it">Appendix A
+— What the Knife Checks, and What Slips Past It</h2>
+<p>This is the compact boundary inside the essay. The <a
+href="appendix-a.html">full Appendix A</a> gives
+the per-module contract, artifact locations, and independence
+roadmap.</p>
+<p><code>VALID</code> means <strong>harness-valid</strong>:
+machine-checkable evidence that the declared gates were satisfied, in
+the declared order, by the code whose hash is recorded. It does not mean
+that the question, metric, control, or interpretation was right.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Instrument surface</th>
+<th>What it can make checkable</th>
+<th>What can still pass</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>preregistration + git ancestry</td>
+<td>the lock predates the run; locked thresholds were not silently
+edited</td>
+<td>thresholds chosen from unrecorded exploration; a written but bad
+rationale</td>
+</tr>
+<tr class="even">
+<td>leakage and evaluation scans</td>
+<td>declared forbidden names and literal truth hints do not enter
+registered paths</td>
+<td>renamed truth, value-level leakage, or an unregistered path</td>
+</tr>
+<tr class="odd">
+<td>calibration, seed, and tautology gates</td>
+<td>declared volume, minimum seed count, variance-ratio and baseline
+obligations</td>
+<td>dependent seeds, bad anchor placement, or a construction trivial in
+an unnamed way</td>
+</tr>
+<tr class="even">
+<td>runner provenance</td>
+<td>required checks were present when the citable decision was
+written</td>
+<td>a meaningless question executed flawlessly; fail-open glue outside
+the runner</td>
+</tr>
+<tr class="odd">
+<td>separate verifier</td>
+<td>missing provenance, stale harness hashes, and false check flags are
+rejected</td>
+<td>a bug or mistaken assumption shared with the runner</td>
+</tr>
+</tbody>
+</table>
+<p>A harness-valid result can still be scientifically worthless
+through:</p>
+<ol type="1">
+<li>an unmodelled leakage channel;</li>
+<li>a truth label semantically renamed;</li>
+<li>thresholds informed by off-record exploratory runs;</li>
+<li>a control that cannot fire;</li>
+<li>a metric aimed at the wrong object;</li>
+<li>dependent observations presented as independent seeds;</li>
+<li>a generator that trivializes the task outside the tautology
+model;</li>
+<li>a wrong assumption shared by runner and verifier;</li>
+<li>a meaningless question, perfectly executed;</li>
+<li>a bug in the verifier.</li>
+</ol>
+<p>Deliberate sabotage is only the eleventh route. The first ten need no
+villain. That is why the knife removes virtue from the trust chain,
+never judgement.</p>
+<hr />
 <h2 id="revisions">Revisions</h2>
 <p>This essay corrects itself in public. Substantive changes to claims —
 never style — are listed here, each with the evidence that forced it.
@@ -365,6 +453,13 @@ default in the gate wiring was caught by review, not by the harness.
 “Not yet shown to transfer” became “tested once, partially — instrument
 yes, playbook still through an expert” (<a
 href="https://github.com/Kirill-Kruglov/fallacy-cutter/blob/main/methodology/04_first_transfer_test.md">methodology/04</a>).</p>
+<p><strong>July 14, 2026 — second transfer wave and integrated
+Appendix.</strong> Three more justitia gates added a held-out boundary,
+an engineering-equivalence pass, and a five-dial isolation failure. The
+transfer log added one new gap after six in wave one: accumulated
+practice improved, while prose-only transfer remained unproved. The
+essay now carries its own compact Appendix A and Contents instead of
+leaving the instrument’s exact boundary behind a single inline link.</p>
 <hr />
 <p><em>This essay is one panel of a triptych — its technical appendix,
 and I hope a self-sufficient one. <a

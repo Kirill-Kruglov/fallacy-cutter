@@ -19,10 +19,18 @@ DOCS = ROOT / "docs"
 REPO = "https://github.com/Kirill-Kruglov/fallacy-cutter"
 
 
-def pandoc(md_path):
+def pandoc(md_path, *, strip_print_contents=False):
+    source = md_path.read_text(encoding="utf-8")
+    if strip_print_contents:
+        source = re.sub(
+            r"<!-- print-contents-start -->.*?<!-- print-contents-end -->",
+            "",
+            source,
+            flags=re.DOTALL,
+        )
     return subprocess.run(
-        ["pandoc", str(md_path), "-t", "html", "--no-highlight"],
-        capture_output=True, text=True, check=True,
+        ["pandoc", "-f", "markdown", "-t", "html", "--no-highlight"],
+        input=source, capture_output=True, text=True, check=True,
     ).stdout
 
 
@@ -151,7 +159,10 @@ def page(title, description, body, *, contents="", byline=""):
 
 def main():
     DOCS.mkdir(exist_ok=True)
-    essay = pandoc(ROOT / "essay" / "instruments-not-intentions.md")
+    essay = pandoc(
+        ROOT / "essay" / "instruments-not-intentions.md",
+        strip_print_contents=True,
+    )
     # the essay links the appendix by its repo-relative path; on the site it is a page
     essay = essay.replace("appendices/A-what-the-knife-checks.md", "appendix-a.html")
     contents = (f'<details class="contents">\n<summary>Contents</summary>\n'
