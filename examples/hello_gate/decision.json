@@ -1,7 +1,7 @@
 {
   "_harness_provenance": {
     "evaluation_oracle_ran": true,
-    "harness_version": "53b59235a56aba8feeacf71df8d4691e9e3814309a0c37c35c1e22ee50cbcb9f",
+    "harness_version": "36bf50cc4ebc2c434e3e78fdef040a748091744b06571dd91ab19a7360c94868",
     "leakage_scan_verified": true,
     "prereg_lock_verified": true,
     "tautology_check_ran": true,
