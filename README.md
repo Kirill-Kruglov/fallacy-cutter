@@ -120,6 +120,26 @@ summary. At a glance:
    decision without `_harness_provenance` is `INVALID` no matter how good its
    numbers look.
 
+Three modules were added after the publication snapshot (v0.2.0), aimed at the
+gaps Appendix A named as open: `exploration_ledger.py` (append-only hash-chained
+record of exploratory runs; `lock_prereg` now demands an explicit
+`exploration_basis` — "none" or the ledger — so off-the-record threshold tuning
+stops being silent), `split_integrity.py` (no declared group — patient, subject,
+batch — may cross a train/test split), and `preprocessing_order.py` (AST scan for
+fit-transformations that see pre-split data). Details in
+[`gate_harness/README.md`](gate_harness/README.md).
+
+## Using it from an agent (Claude Science, Claude Code, ...)
+
+The core is self-contained; hosts attach through adapters that only touch the
+public API. [`spec/`](spec/) freezes the `decision.json` format (schema v1 + an
+implementation-free verification algorithm, so a verifier can be written without
+reading this code). [`integrations/claude_science/`](integrations/claude_science/)
+packages the instrument as an agent skill (the two-rooms protocol with a
+refusal→next-action table) and a dependency-free MCP server exposing exactly
+`gate_lock`, `verify_decision`, and `log_exploration` — deliberately no tool that
+can mint a `decision.json`.
+
 ## The ten disciplinary moves
 
 The method extraction is in

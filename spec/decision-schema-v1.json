@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Kirill-Kruglov/fallacy-cutter/main/spec/decision-schema-v1.json",
+  "title": "fallacy-cutter decision.json — v1",
+  "description": "A citable gate decision. The payload fields (question, metric, decision, ...) are the experiment's own; the _harness_provenance block is the machine-checkable part this schema freezes. A document that fails this schema is INVALID unconditionally, regardless of its numbers.",
+  "type": "object",
+  "required": ["_harness_provenance"],
+  "properties": {
+    "_harness_provenance": {
+      "type": "object",
+      "required": [
+        "written_by",
+        "harness_version",
+        "prereg_lock_verified",
+        "leakage_scan_verified",
+        "tautology_check_ran",
+        "evaluation_oracle_ran"
+      ],
+      "properties": {
+        "written_by": {
+          "const": "gate_harness.runner.run_gate",
+          "description": "The only sanctioned writer. Any other value is a bypass."
+        },
+        "harness_version": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "SHA256 over the sorted per-file SHA256 digests of the top-level gate_harness/*.py sources present at run time. A verifier recomputes this against the harness it trusts; mismatch means the harness changed since the run and the decision must be re-run."
+        },
+        "prereg_lock_verified": { "const": true },
+        "leakage_scan_verified": { "const": true },
+        "tautology_check_ran": { "const": true },
+        "evaluation_oracle_ran": {
+          "type": "boolean",
+          "description": "May be false only if no evaluation entrypoints exist; a verifier MAY treat false as a reason to refuse."
+        }
+      },
+      "additionalProperties": true
+    },
+    "construction_may_be_tautological": {
+      "type": "boolean",
+      "description": "Harness-only flag; the experiment cannot set or clear it."
+    },
+    "classification_success_depends_on_harness_hint": {
+      "type": "boolean",
+      "description": "Harness-only flag; true means an evaluation call site received a ground-truth hint."
+    },
+    "decision": { "type": "string" },
+    "question": { "type": "string" },
+    "metric": { "type": "string" },
+    "what_was_not_shown": { "type": "string" }
+  },
+  "additionalProperties": true
+}

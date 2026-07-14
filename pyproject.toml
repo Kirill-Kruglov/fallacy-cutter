@@ -1,6 +1,6 @@
 [project]
 name = "fallacy-cutter"
-version = "0.1.0"
+version = "0.2.0"
 description = "A fail-closed instrument and methodology for trustworthy experiments by humans and AI agents"
 requires-python = ">=3.11"
 dependencies = ["numpy"]

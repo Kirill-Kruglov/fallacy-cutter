@@ -87,6 +87,45 @@ with it (tests 1/3/4 were already GREEN from the backbone layer — not faked-re
   good its numbers look. The verifier is deliberately a *separate* module from the
   runner it checks. Adversarial test #8.
 
+## Added after the publication snapshot (v0.2.0)
+
+These three modules extend the knife to the gaps Appendix A named as open:
+taxonomy item #3 (off-the-record exploratory runs) and leakage through data
+values rather than code references.
+
+### `exploration_ledger.py` — the quiet room made audible (taxonomy #3)
+- Append-only, SHA256-chained JSONL record of exploratory runs. Blocks nothing;
+  entries can be added but not silently edited, reordered, or truncated.
+- `lock_prereg` now **requires** `exploration_basis`: the literal `"none"` (an
+  explicit declaration that no exploratory runs informed the thresholds) or a
+  path to a chain-valid ledger, whose head hash is frozen into `PREREG.json`.
+  Both answers are honest; silence stops being an option.
+- CLI: `python -m gate_harness.exploration_ledger log|head|verify`.
+
+### `split_integrity.py` — leakage through data structure
+- `assert_group_split_integrity(groups, splits, declared_group_key=...)` fails
+  if any declared group (patient, subject, batch) appears in more than one
+  split — the dominant real leak in omics/clinical ML, which no truth-name scan
+  sees. An undeclared grouping or a sample without a group is NOT_VERIFIABLE →
+  FAIL, never a silent pass.
+
+### `preprocessing_order.py` — fit-transformations that see test data
+- AST scan of registered pipeline functions: a `.fit()`/`.fit_transform()` on
+  pre-split data (the variable passed to `train_test_split`/`KFold`/... , or a
+  fit on an earlier line than the split) is a violation. No split call found in
+  any registered function → NOT_VERIFIABLE → FAIL.
+- Honest limits are in the module docstring: aliasing, cross-function flow, and
+  raw-array normalization slip past; the scan catches the common sklearn-shaped
+  mistake, it does not prove the pipeline leak-free.
+
+### CLI + adapters
+- `python -m gate_harness.prereg lock|verify` — lock and check preregistrations
+  without writing Python; every refusal carries an executable `next:` action.
+- The `decision.json` format is frozen as [`spec/`](../spec/) (schema v1 +
+  implementation-free verification algorithm); host adapters (agent skill, MCP
+  server) live in [`integrations/`](../integrations/claude_science/) and touch
+  only the public API — the core stays self-contained.
+
 ## Integration status
 
 `runner.py` end-to-end run of a real gate (B1 first) is the true system test —

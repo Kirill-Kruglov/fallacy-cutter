@@ -99,7 +99,7 @@ def test_precommit_blocks_locked_prereg_edit():
         (repo / "s").write_text("x"); _run(["git", "add", "s"], repo); _run(["git", "commit", "-qm", "i"], repo)
         cwd0 = os.getcwd(); os.chdir(repo)
         try:
-            PR.lock_prereg("G1", {"corr_min": 0.9}, experiments_root=repo / "experiments")
+            PR.lock_prereg("G1", {"corr_min": 0.9}, exploration_basis="none", experiments_root=repo / "experiments")
         finally:
             os.chdir(cwd0)
         _run(["git", "add", "experiments/G1/PREREG.json", "experiments/G1/PREREG.lock"], repo)
@@ -169,7 +169,7 @@ def test_runner_refuses_without_valid_lock():
         # (b) lock exists but rev == HEAD (prereg not committed before run)
         cwd0 = os.getcwd(); os.chdir(repo)
         try:
-            PR.lock_prereg("G1", {}, experiments_root=repo / "experiments")
+            PR.lock_prereg("G1", {}, exploration_basis="none", experiments_root=repo / "experiments")
         finally:
             os.chdir(cwd0)
         try:

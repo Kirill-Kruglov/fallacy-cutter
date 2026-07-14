@@ -97,6 +97,11 @@ def main(argv: list[str] | None = None) -> int:
             print(f"INVALID {path}")
             for r in reasons:
                 print(f"        - {r}")
+            print(
+                "        next: a decision is citable only if written by "
+                "gate_harness.runner.run_gate against the current harness — "
+                "re-run the gate through the runner (see examples/hello_gate/run.py)"
+            )
     return rc
 
 

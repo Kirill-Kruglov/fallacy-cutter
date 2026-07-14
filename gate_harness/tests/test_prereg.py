@@ -38,7 +38,7 @@ def test_prereg_lock_and_two_phase_flow():
 
         cwd0 = os.getcwd(); os.chdir(repo)
         try:
-            PR.lock_prereg("G1", {"corr_min": 0.9}, experiments_root=repo / "experiments")
+            PR.lock_prereg("G1", {"corr_min": 0.9}, exploration_basis="none", experiments_root=repo / "experiments")
         finally:
             os.chdir(cwd0)
 
@@ -72,9 +72,9 @@ def test_prereg_threshold_change_requires_rationale():
 
         cwd0 = os.getcwd(); os.chdir(repo)
         try:
-            PR.lock_prereg("G1", {"corr_min": 0.9}, experiments_root=root)
+            PR.lock_prereg("G1", {"corr_min": 0.9}, exploration_basis="none", experiments_root=root)
             try:
-                PR.lock_prereg("G2", {"corr_min": 0.85}, experiments_root=root)
+                PR.lock_prereg("G2", {"corr_min": 0.85}, exploration_basis="none", experiments_root=root)
             except PR.PreregError as exc:
                 assert "finding #9" in str(exc)
                 print("  [ok] loosened threshold w/o rationale rejected (finding #9)")
@@ -85,6 +85,7 @@ def test_prereg_threshold_change_requires_rationale():
                 "G2",
                 {"corr_min": 0.85},
                 {"corr_min": "affine world has higher irreducible noise; see spec §R3"},
+                exploration_basis="none",
                 experiments_root=root,
             )
             print("  [ok] loosened threshold WITH rationale allowed")

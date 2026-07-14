@@ -18,6 +18,13 @@ Modules:
   - ``evaluation_oracle`` : ground-truth hints at eval call sites (finding #6)
   - ``runner``            : refuses to run without a valid prereg lock (findings #1/#2)
   - ``verify_decision``   : standalone provenance verifier (§1.7, closes bypass gap)
+
+Added after the publication snapshot (taxonomy items #3 and data-value leakage,
+Appendix A.2/A.3):
+  - ``exploration_ledger``   : append-only hash-chained record of exploratory runs;
+                               ``lock_prereg`` requires an explicit exploration_basis
+  - ``split_integrity``      : declared-group train/test split check (patient_id etc.)
+  - ``preprocessing_order``  : AST scan for fit-transformations that see pre-split data
 """
 
 __all__ = [
@@ -29,4 +36,7 @@ __all__ = [
     "evaluation_oracle",
     "runner",
     "verify_decision",
+    "exploration_ledger",
+    "split_integrity",
+    "preprocessing_order",
 ]

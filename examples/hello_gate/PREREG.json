@@ -1,4 +1,5 @@
 {
+  "exploration_basis": "none",
   "gate": "hello_gate",
   "metadata": {
     "controls": [
