@@ -35,10 +35,11 @@ def pandoc(md_path, *, strip_print_contents=False):
 
 
 def toc_from(body):
-    heads = re.findall(r'<h([12]) id="([^"]+)">(.*?)</h[12]>', body, re.DOTALL)
+    # pandoc may wrap a long heading tag across lines, so allow whitespace/attrs
+    heads = re.findall(r'<h([12])\s[^>]*?id="([^"]+)"[^>]*>(.*?)</h[12]>', body, re.DOTALL)
     items, first_h1 = [], False
     for level, hid, text in heads:
-        text = re.sub(r"<[^>]+>", "", text).strip()
+        text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", text)).strip()
         if level == "1" and not first_h1:
             first_h1 = True
             continue
@@ -106,6 +107,7 @@ NAV = """<nav class="nav">
   <a class="brand" href="./">fallacy-cutter</a>
   <div class="right">
     <a href="./">Essay</a>
+    <a href="science.html">Science</a>
     <a href="about.html">About</a>
     <a href="REPO">GitHub</a>
     <button id="theme" type="button" aria-label="Toggle light / dark">&#9682;</button>
@@ -165,6 +167,13 @@ def main():
     )
     # the essay links the appendix by its repo-relative path; on the site it is a page
     essay = essay.replace("appendices/A-what-the-knife-checks.md", "appendix-a.html")
+    # ... except the body reference reading just "Appendix A": the essay carries its
+    # own compact Appendix A section, so that one stays an in-page anchor. The
+    # "full Appendix A" link inside that section keeps pointing at the full page.
+    essay = essay.replace(
+        'href="appendix-a.html">Appendix A</a>',
+        'href="#appendix-a-what-the-knife-checks-and-what-slips-past-it">Appendix A</a>',
+    )
     contents = (f'<details class="contents">\n<summary>Contents</summary>\n'
                 f'<nav>\n{toc_from(essay)}\n</nav>\n</details>')
     (DOCS / "index.html").write_text(page(
@@ -181,6 +190,14 @@ def main():
         "and Claude, behind a harness that refuses to certify unprovenanced results.",
         about,
     ), encoding="utf-8")
+    science = pandoc(ROOT / "essay" / "science.md")
+    (DOCS / "science.html").write_text(page(
+        "Using fallacy-cutter with Claude Science",
+        "How to connect the fail-closed gate harness to Claude Science, and why: "
+        "the workbench makes experiments reproducible, the knife makes shortcuts "
+        "non-citable — install the skill, log exploration, freeze thresholds, verify.",
+        science,
+    ), encoding="utf-8")
     appendix = pandoc(ROOT / "essay" / "appendices" / "A-what-the-knife-checks.md")
     # repo-relative links inside the appendix should point at GitHub, not the site
     appendix = re.sub(r'href="\.\./\.\./', f'href="{REPO}/blob/main/', appendix)
@@ -190,7 +207,7 @@ def main():
         "false-pass taxonomy, what VALID means, and the independence roadmap.",
         appendix,
     ), encoding="utf-8")
-    print(f"wrote {DOCS/'index.html'}, {DOCS/'about.html'}, {DOCS/'appendix-a.html'}")
+    print(f"wrote {DOCS/'index.html'}, {DOCS/'science.html'}, {DOCS/'about.html'}, {DOCS/'appendix-a.html'}")
 
 
 if __name__ == "__main__":
